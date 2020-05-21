@@ -1,6 +1,7 @@
 package geektime.spring.hello.hellospring;
 
 import geektime.spring.hello.hellospring.po.FooDao;
+import geektime.spring.hello.hellospring.service.DeclarativeTransactionService;
 import geektime.spring.hello.hellospring.service.ProgrammaticTransactionService;
 import geektime.spring.hello.hellospring.service.SimpleJdbcService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,9 @@ public class HelloSpringApplication implements CommandLineRunner {
 	@Autowired
 	private ProgrammaticTransactionService programmaticTransactionService;
 
+	@Autowired
+	private DeclarativeTransactionService declarativeTransactionService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(HelloSpringApplication.class, args);
 	}
@@ -32,9 +36,11 @@ public class HelloSpringApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		//fooDao.insertData();                                       // jdbc简单操作，插入数据
 		//fooDao.listData();                                         // jdbc简单操作，列表展示
-		//programmaticTransactionService.programmaticTransaction();  // 编程式事务
 		//jdbcService.showConnection();                              // jdbc简单操作，显示连接数
 		//jdbcService.showData();                                    // jdbc简单操作，显示数据
+
+		//programmaticTransactionService.programmaticTransaction();  // 编程式事务
+		declarativeTransactionService.declarativeTransaction();      // 声明式事务
 	}
 
 
