@@ -1,4 +1,4 @@
-package geektime.spring.hello.hellospring;
+package geektime.spring.hello.hellospring.po;
 
 import lombok.Builder;
 import lombok.Data;

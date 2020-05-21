@@ -1,4 +1,4 @@
-package geektime.spring.hello.hellospring;
+package geektime.spring.hello.hellospring.conf;
 
 import com.alibaba.druid.filter.FilterChain;
 import com.alibaba.druid.filter.FilterEventAdapter;

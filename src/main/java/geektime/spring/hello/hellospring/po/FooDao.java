@@ -1,7 +1,8 @@
-package geektime.spring.hello.hellospring;
+package geektime.spring.hello.hellospring.po;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -54,6 +55,13 @@ public class FooDao {
             }
         });
         fooList.forEach(f-> log.info("foo:[{}]", f));
+
+    }
+
+    @Bean
+    @Autowired
+    public SimpleJdbcInsert simpleJdbcInsert (JdbcTemplate jdbcTemplate){
+        return new SimpleJdbcInsert(jdbcTemplate).withTableName("Foo").usingGeneratedKeyColumns("ID");
 
     }
 
