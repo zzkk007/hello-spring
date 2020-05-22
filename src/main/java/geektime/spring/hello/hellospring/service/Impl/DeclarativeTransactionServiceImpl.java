@@ -5,11 +5,11 @@ import geektime.spring.hello.hellospring.service.DeclarativeTransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
-@Service
+@Component
 public class DeclarativeTransactionServiceImpl implements DeclarativeTransactionService {
 
     /**
@@ -49,7 +49,7 @@ public class DeclarativeTransactionServiceImpl implements DeclarativeTransaction
         throw new RollbackException();
     }
 
-    @Override
+    @Override     // 不加事务，事务的执行链就断了
     public void invokeInsertThenRollback() throws RollbackException {
         insertThenRollback();
     }
