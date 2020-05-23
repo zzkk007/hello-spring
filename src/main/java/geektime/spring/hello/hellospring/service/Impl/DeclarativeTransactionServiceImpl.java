@@ -36,6 +36,9 @@ public class DeclarativeTransactionServiceImpl implements DeclarativeTransaction
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private DeclarativeTransactionService declarativeTransactionService;
+
     @Override
     @Transactional
     public void insertRecord(){
@@ -49,9 +52,10 @@ public class DeclarativeTransactionServiceImpl implements DeclarativeTransaction
         throw new RollbackException();
     }
 
-    @Override     // 不加事务，事务的执行链就断了
+    @Override
     public void invokeInsertThenRollback() throws RollbackException {
-        insertThenRollback();
+        //insertThenRollback();  // 执行链断了，调用 insertThenRollback()方法中的事务没有生效。
+        declarativeTransactionService.insertThenRollback();   // 事务生效
     }
 
     @Override
