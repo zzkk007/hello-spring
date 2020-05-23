@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
@@ -81,4 +82,39 @@ public class DeclarativeTransactionServiceImpl implements DeclarativeTransaction
                             .queryForObject("SELECT COUNT(*) FROM FOO WHERE BAR='BBB'", Long.class));
         }
     }
+
+    /*******************************事务传播特性********************************/
+
+
+    @Override
+    @Transactional(rollbackFor = RollbackException.class, propagation = Propagation.NESTED)
+    public void propagationInsertThenRollback() throws RollbackException {
+        jdbcTemplate.execute("INSERT INTO FOO (BAR) VALUES ('BBBB')");
+        //throw new RollbackException();
+    }
+
+    @Override
+    @Transactional(rollbackFor = RuntimeException.class)
+    public void propagationInvokeInsertThenRollback() {
+        jdbcTemplate.execute("INSERT INTO FOO (BAR) VALUES ('AAAA')");
+        try {
+            declarativeTransactionService.propagationInsertThenRollback();
+        } catch (RollbackException e) {
+            log.error("RollbackException", e);
+        }
+        throw new RuntimeException();
+    }
+
+    @Override
+    public void propagation() {
+        try {
+            declarativeTransactionService.propagationInvokeInsertThenRollback();
+        } catch (Exception e) {
+
+        }
+        log.info("AAAA {}", jdbcTemplate.queryForObject("select count(*) from foo where bar='AAAA'", Long.class));
+        log.info("BBBB {}", jdbcTemplate.queryForObject("select count(*) from foo where bar='BBBB'", Long.class));
+    }
+
+
 }

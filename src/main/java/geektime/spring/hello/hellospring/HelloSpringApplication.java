@@ -40,7 +40,8 @@ public class HelloSpringApplication implements CommandLineRunner {
 		//jdbcService.showData();                                    // jdbc简单操作，显示数据
 
 		//programmaticTransactionService.programmaticTransaction();  // 编程式事务
-		declarativeTransactionService.declarativeTransaction();      // 声明式事务
+		//declarativeTransactionService.declarativeTransaction();      // 声明式事务
+		declarativeTransactionService.propagation();
 	}
 
 
