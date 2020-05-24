@@ -2,6 +2,7 @@ package geektime.spring.hello.hellospring;
 
 import geektime.spring.hello.hellospring.po.FooDao;
 import geektime.spring.hello.hellospring.service.DeclarativeTransactionService;
+import geektime.spring.hello.hellospring.service.DruidFunctionService;
 import geektime.spring.hello.hellospring.service.ProgrammaticTransactionService;
 import geektime.spring.hello.hellospring.service.SimpleJdbcService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,9 @@ public class HelloSpringApplication implements CommandLineRunner {
 	@Autowired
 	private DeclarativeTransactionService declarativeTransactionService;
 
+	@Autowired
+	private DruidFunctionService druidFunctionService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(HelloSpringApplication.class, args);
 	}
@@ -41,7 +45,9 @@ public class HelloSpringApplication implements CommandLineRunner {
 
 		//programmaticTransactionService.programmaticTransaction();  // 编程式事务
 		//declarativeTransactionService.declarativeTransaction();      // 声明式事务
-		declarativeTransactionService.propagation();
+		//declarativeTransactionService.propagation();                // 事务传播特性
+
+		druidFunctionService.showDruidSlowLog();
 	}
 
 
